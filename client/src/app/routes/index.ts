@@ -3,6 +3,7 @@ import { RouteObject } from 'react-router-dom';
 import { Paths } from '../../core/enums/Paths';
 
 import Root from '../pages/Root';
+import SignIn from '../pages/SignIn';
 import SignUp from '../pages/SignUp';
 
 const routes: RouteObject[] = [
@@ -12,6 +13,7 @@ const routes: RouteObject[] = [
     Component: Root,
     children: [],
   },
+  { path: Paths.SignIn, Component: SignIn },
   { path: Paths.SignUp, Component: SignUp },
 ];
 
