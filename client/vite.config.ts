@@ -10,6 +10,9 @@ export default defineConfig({
   server: {
     port: 4200,
     host: 'localhost',
+    fs: {
+      allow: ['../node_modules/.pnpm/@fontsource+public-sans@5.0.16'],
+    },
   },
 
   preview: {
