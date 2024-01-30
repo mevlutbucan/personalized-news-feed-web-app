@@ -1,4 +1,6 @@
 import { type FunctionComponent, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
@@ -16,9 +18,22 @@ import FormTitle from './shared/FormTitle';
 import FormLink from './shared/FormLink';
 import FormInput from './shared/FormInput';
 
-const SignInForm: FunctionComponent<Props> = ({ title, signUpPath }) => {
-  const [showPassword, setShowPassword] = useState(false);
+import type { SignInFieldValues } from '../../../../core/types/auth';
+import { SignInSchema } from '../../../../core/schemas/auth/signin';
 
+const SignInForm: FunctionComponent<Props> = ({ title, signUpPath }) => {
+  const { register, handleSubmit, formState } = useForm<SignInFieldValues>({
+    resolver: yupResolver(SignInSchema),
+  });
+
+  const { onChange: onEmailChange, ref: emailRef } = register('email');
+  const { onChange: onPasswordChange, ref: passwordRef } = register('password');
+
+  const onFormSubmit = handleSubmit((data) => {
+    console.log(data);
+  });
+
+  const [showPassword, setShowPassword] = useState(false);
   const handleShowPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     setShowPassword((show) => !show);
@@ -30,7 +45,7 @@ const SignInForm: FunctionComponent<Props> = ({ title, signUpPath }) => {
         <FormTitle text={title} />
         <FormLink to={signUpPath} reason="Are you new?" text="Create an account" />
 
-        <Stack component="form" mt={5} spacing={2}>
+        <Stack component="form" mt={5} spacing={2} onSubmit={onFormSubmit}>
           <Alert severity="info" sx={{ alignItems: 'center' }}>
             <Stack>
               <span>
@@ -44,7 +59,19 @@ const SignInForm: FunctionComponent<Props> = ({ title, signUpPath }) => {
             </Stack>
           </Alert>
 
-          <FormInput required id="email" name="email" label="Email Address" autoComplete="email" autoFocus />
+          <FormInput
+            required
+            id="email"
+            name="email"
+            label="Email Address"
+            autoComplete="email"
+            autoFocus
+            onChange={onEmailChange}
+            error={formState.isDirty && Boolean(formState.errors.email)}
+            errorMessage={formState.isDirty && formState.errors.email?.message}
+            ref={emailRef}
+          />
+
           <FormInput
             type={showPassword ? 'text' : 'password'}
             required
@@ -52,6 +79,10 @@ const SignInForm: FunctionComponent<Props> = ({ title, signUpPath }) => {
             name="password"
             label="Password"
             autoComplete="password"
+            onChange={onPasswordChange}
+            error={formState.isDirty && Boolean(formState.errors.password)}
+            errorMessage={formState.isDirty && formState.errors.password?.message}
+            ref={passwordRef}
             endAdornment={
               <InputAdornment position="end">
                 <IconButton aria-label="toggle password visibility" onClick={handleShowPassword} edge="end">

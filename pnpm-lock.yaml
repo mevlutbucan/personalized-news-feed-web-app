@@ -14,6 +14,9 @@ dependencies:
   '@fontsource/public-sans':
     specifier: ^5.0.16
     version: 5.0.16
+  '@hookform/resolvers':
+    specifier: ^3.3.4
+    version: 3.3.4(react-hook-form@7.49.3)
   '@mui/icons-material':
     specifier: ^5.15.6
     version: 5.15.6(@mui/material@5.15.6)(@types/react@18.2.33)(react@18.2.0)
@@ -41,6 +44,9 @@ dependencies:
   react-helmet-async:
     specifier: ^2.0.4
     version: 2.0.4(react-dom@18.2.0)(react@18.2.0)
+  react-hook-form:
+    specifier: ^7.49.3
+    version: 7.49.3(react@18.2.0)
   react-redux:
     specifier: ^9.1.0
     version: 9.1.0(@types/react@18.2.33)(react@18.2.0)(redux@5.0.1)
@@ -2025,6 +2031,14 @@ packages:
 
   /@fontsource/public-sans@5.0.16:
     resolution: {integrity: sha512-bThZip6sLRsnfzi/oBr1/9+aWmvHkb59QlLh/OtoAIA0Mi2+Z1cKOxtR1B2ITauljlLJHPRvjpTZDUZitUN8pA==}
+    dev: false
+
+  /@hookform/resolvers@3.3.4(react-hook-form@7.49.3):
+    resolution: {integrity: sha512-o5cgpGOuJYrd+iMKvkttOclgwRW86EsWJZZRC23prf0uU2i48Htq4PuT73AVb9ionFyZrwYEITuOFGF+BydEtQ==}
+    peerDependencies:
+      react-hook-form: ^7.0.0
+    dependencies:
+      react-hook-form: 7.49.3(react@18.2.0)
     dev: false
 
   /@humanwhocodes/config-array@0.11.14:
@@ -10044,6 +10058,15 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
       react-fast-compare: 3.2.2
       shallowequal: 1.1.0
+    dev: false
+
+  /react-hook-form@7.49.3(react@18.2.0):
+    resolution: {integrity: sha512-foD6r3juidAT1cOZzpmD/gOKt7fRsDhXXZ0y28+Al1CHgX+AY1qIN9VSIIItXRq1dN68QrRwl1ORFlwjBaAqeQ==}
+    engines: {node: '>=18', pnpm: '8'}
+    peerDependencies:
+      react: ^16.8.0 || ^17 || ^18
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /react-is@16.13.1:
