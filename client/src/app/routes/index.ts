@@ -1,10 +1,9 @@
 import { RouteObject } from 'react-router-dom';
 
-import Root from '../pages/Root';
+import { Paths } from '../../core/enums/Paths';
 
-enum Paths {
-  Root = '/',
-}
+import Root from '../pages/Root';
+import SignUp from '../pages/SignUp';
 
 const routes: RouteObject[] = [
   {
@@ -13,6 +12,7 @@ const routes: RouteObject[] = [
     Component: Root,
     children: [],
   },
+  { path: Paths.SignUp, Component: SignUp },
 ];
 
 export default routes;
