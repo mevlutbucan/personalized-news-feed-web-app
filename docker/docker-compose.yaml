@@ -1,0 +1,19 @@
+name: personalized-news-feed-web-app
+services:
+  MongoDB:
+    image: mongo:6.0.13
+    restart: always
+    ports:
+      - mode: host
+        protocol: tcp
+        host_ip: localhost
+        published: 27017
+        target: 27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: test
+      MONGO_INITDB_ROOT_PASSWORD: test
+    volumes:
+      - MongoDB.Data:/data/db
+
+volumes:
+  MongoDB.Data:
