@@ -1,19 +1,35 @@
 name: personalized-news-feed-web-app
 services:
-  MongoDB:
+  MongoDB1:
     image: mongo:6.0.13
+    container_name: MongoDB1
     restart: always
+    networks:
+      - mongo-network
     ports:
-      - mode: host
-        protocol: tcp
-        host_ip: localhost
-        published: 27017
-        target: 27017
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: test
-      MONGO_INITDB_ROOT_PASSWORD: test
+      - 27017:27017
+    depends_on:
+      - MongoDB2
+    links:
+      - MongoDB2
     volumes:
       - MongoDB.Data:/data/db
+      - ./scripts/rs-init.sh:/scripts/rs-init.sh
+      - ./scripts/init.js:/scripts/init.js
+    entrypoint: ['/usr/bin/mongod', '--bind_ip_all', '--replSet', 'dbrs']
+  MongoDB2:
+    image: mongo:6.0.13
+    container_name: MongoDB2
+    restart: always
+    networks:
+      - mongo-network
+    ports:
+      - 27018:27017
+    entrypoint: ['/usr/bin/mongod', '--bind_ip_all', '--replSet', 'dbrs']
+
+networks:
+  mongo-network:
+    driver: bridge
 
 volumes:
   MongoDB.Data:
