@@ -1,27 +1,54 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import type { User } from '@prisma/client';
+import { SignInFieldValues, SignUpFieldValues } from '@shared/core';
 
-import { UserService } from './user/user.service';
+import { UserService } from '../user/user.service';
+
+import { comparePassword, encryptPassword } from './utils/crypto';
 
 @Injectable()
 export class AuthService {
   constructor(private userService: UserService, private jwtService: JwtService) {}
 
-  async validateUser(email: string, password: string) {
+  private async _validateUser(email: string, password: string) {
     const user = await this.userService.findOne({ email });
-    if (user && user.password === password) {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { password, ...result } = user;
-      return result;
+    if (!user) {
+      throw new Error('Invalid email');
+    } else if (!(await comparePassword(password, user.password))) {
+      throw new Error('Invalid password');
     }
-    return null;
+    return user;
   }
 
-  async login(user: User) {
+  private _createResponse(user: User) {
     const payload = { sub: user.id, email: user.email };
     return {
       access_token: this.jwtService.sign(payload),
     };
+  }
+
+  async signin(data: SignInFieldValues) {
+    try {
+      const user = await this._validateUser(data.email, data.password);
+      return this._createResponse(user);
+    } catch (error) {
+      return new UnauthorizedException(error);
+    }
+  }
+
+  async signup(data: SignUpFieldValues) {
+    data.password = await encryptPassword(data.password);
+    return this.userService.create(data).then(
+      (user) => {
+        return this._createResponse(user);
+      },
+      (error) => {
+        if (error.code === 'P2002') {
+          return new BadRequestException('Email is already used.');
+        }
+        return new InternalServerErrorException(error);
+      }
+    );
   }
 }

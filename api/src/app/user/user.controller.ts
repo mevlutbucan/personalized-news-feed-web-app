@@ -3,14 +3,14 @@ import { User } from '@prisma/client';
 
 import { UserService } from './user.service';
 
-import { JwtAuthGuard } from '../jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @Controller('user')
 export class UserController {
   constructor(private userService: UserService) {}
 
-  @UseGuards(JwtAuthGuard)
   @Get('profile')
+  @UseGuards(JwtAuthGuard)
   getProfile(@Request() req: { user: User }) {
     return this.userService.findOne({ id: req.user.id });
   }
