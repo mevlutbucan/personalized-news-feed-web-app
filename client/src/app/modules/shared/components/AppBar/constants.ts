@@ -1,0 +1,1 @@
+export const OPENED_SIDEBAR_WIDTH = 180;
