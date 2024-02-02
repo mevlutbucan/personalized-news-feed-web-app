@@ -5,3 +5,7 @@ import { SignUpSchema } from '../schemas/auth/signup';
 
 export type SignInFieldValues = InferType<typeof SignInSchema>;
 export type SignUpFieldValues = InferType<typeof SignUpSchema>;
+
+export interface AuthResponseBody {
+  accessToken: string;
+}

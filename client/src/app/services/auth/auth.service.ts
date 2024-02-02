@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { SignInFieldValues, SignUpFieldValues } from '@shared/core';
+import type { AuthResponseBody, SignInFieldValues, SignUpFieldValues } from '@shared/core';
 
 export class AuthService {
   static create() {
@@ -7,10 +7,10 @@ export class AuthService {
   }
 
   async signin(data: SignInFieldValues) {
-    return axios.post('/api/auth/signin', data);
+    return axios.post<AuthResponseBody>('/api/auth/signin', data);
   }
 
   async signup(data: SignUpFieldValues) {
-    return axios.post('/api/auth/signup', data);
+    return axios.post<AuthResponseBody>('/api/auth/signup', data);
   }
 }

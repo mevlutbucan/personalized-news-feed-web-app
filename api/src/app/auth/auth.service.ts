@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import type { User } from '@prisma/client';
-import { SignInFieldValues, SignUpFieldValues } from '@shared/core';
+import { AuthResponseBody, SignInFieldValues, SignUpFieldValues } from '@shared/core';
 
 import { UserService } from '../user/user.service';
 
@@ -21,10 +21,10 @@ export class AuthService {
     return user;
   }
 
-  private _createResponse(user: User) {
+  private _createResponse(user: User): AuthResponseBody {
     const payload = { sub: user.id, email: user.email };
     return {
-      access_token: this.jwtService.sign(payload),
+      accessToken: this.jwtService.sign(payload),
     };
   }
 
@@ -33,22 +33,20 @@ export class AuthService {
       const user = await this._validateUser(data.email, data.password);
       return this._createResponse(user);
     } catch (error) {
-      return new UnauthorizedException(error);
+      throw new UnauthorizedException(error);
     }
   }
 
   async signup(data: SignUpFieldValues) {
     data.password = await encryptPassword(data.password);
-    return this.userService.create(data).then(
-      (user) => {
-        return this._createResponse(user);
-      },
-      (error) => {
-        if (error.code === 'P2002') {
-          return new BadRequestException('Email is already used.');
-        }
-        return new InternalServerErrorException(error);
+    try {
+      const user = await this.userService.create(data);
+      return this._createResponse(user);
+    } catch (error) {
+      if (error.code === 'P2002') {
+        throw new BadRequestException('Email is already used.');
       }
-    );
+      throw new InternalServerErrorException(error);
+    }
   }
 }
