@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 
-const PASSWORD_REGEX = /^(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z])(?=\D*\d)[A-Za-z0-9]{1,}$/;
+const PASSWORD_REGEX = /^(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z])(?=\D*\d).{1,}$/;
 
 export const SignInSchema = yup.object({
   email: yup.string().required('Email is required.').email('Please enter a valid email address.'),
