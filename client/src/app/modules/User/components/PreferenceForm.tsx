@@ -1,6 +1,6 @@
 import { type FunctionComponent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { SECTIONS } from '@shared/core';
+import { GUARDIAN_SECTIONS } from '@shared/core';
 
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
@@ -87,7 +87,7 @@ const PreferenceForm: FunctionComponent<Props> = ({ title }) => {
             Sections
           </FormLabel>
           <FormGroup row sx={{ flexWrap: 'wrap' }}>
-            {Object.entries(SECTIONS).map(([key, value], index) => (
+            {Object.entries(GUARDIAN_SECTIONS).map(([key, value], index) => (
               <FormControlLabel
                 key={index}
                 control={<Checkbox checked={!!sections[value]} name={value} onChange={handleSectionChange} />}
