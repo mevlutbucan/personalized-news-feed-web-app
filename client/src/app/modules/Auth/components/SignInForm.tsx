@@ -1,6 +1,7 @@
 import { type FunctionComponent, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { SignInFieldValues, SignInSchema } from '@shared/core';
 
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
@@ -18,8 +19,6 @@ import FormTitle from './shared/FormTitle';
 import FormLink from './shared/FormLink';
 import FormInput from './shared/FormInput';
 
-import type { SignInFieldValues } from '../../../../core/types/auth';
-import { SignInSchema } from '../../../../core/schemas/auth/signin';
 import { useAppDispatch } from '../../../services/redux/hooks';
 import { signIn } from '../../../services/redux/auth/actions';
 
