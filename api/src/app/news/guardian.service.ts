@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { NewsGetRequestBody } from '@shared/core';
+import { NewsGetRequestBody, NewsGetResponseBody } from '@shared/core';
 
 @Injectable()
 export class GuardianService {
@@ -31,9 +31,15 @@ export class GuardianService {
     }, '');
   };
 
-  async search(query = '', filtersObj: NewsGetRequestBody['filters'] = {}) {
+  async search(query = '', filtersObj: NewsGetRequestBody['filters'] = {}): Promise<NewsGetResponseBody> {
     const filters = this._getFiltersAsString(filtersObj);
-    const response = await fetch(`${this._baseUrl}?api-key=${this._apiKey}&q=${query}${filters}`);
-    return await response.json();
+    try {
+      const response = await fetch(
+        `${this._baseUrl}?api-key=${this._apiKey}&q=${query}${filters}&show-fields=thumbnail`
+      );
+      return await response.json().then((data) => data.response);
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
   }
 }
