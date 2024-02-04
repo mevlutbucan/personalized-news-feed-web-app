@@ -1,5 +1,7 @@
+import { Source } from '@shared/core';
+
 interface UserPreferences {
-  source: string;
+  source: Source;
   sections: string[];
 }
 

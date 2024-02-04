@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { NewsGetRequestBody } from '@shared/core';
+import { NewsGetRequestBody, NewsGetResponseBody } from '@shared/core';
 
 export class NewsService {
   static create() {
@@ -7,6 +7,6 @@ export class NewsService {
   }
 
   async getNews(accessToken: string, data: NewsGetRequestBody) {
-    return axios.post('/api/news', data, { headers: { Authorization: 'Bearer ' + accessToken } });
+    return axios.post<NewsGetResponseBody>('/api/news', data, { headers: { Authorization: 'Bearer ' + accessToken } });
   }
 }
