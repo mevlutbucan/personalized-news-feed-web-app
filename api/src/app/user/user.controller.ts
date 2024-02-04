@@ -1,5 +1,5 @@
-import { Controller, Get, Request, UseGuards } from '@nestjs/common';
-import { User } from '@prisma/client';
+import { Body, Controller, Get, Put, Request, UseGuards } from '@nestjs/common';
+import { UserUpdateRequestBody } from '@shared/core';
 
 import { UserService } from './user.service';
 
@@ -9,9 +9,15 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 export class UserController {
   constructor(private userService: UserService) {}
 
-  @Get('profile')
+  @Get()
   @UseGuards(JwtAuthGuard)
-  getProfile(@Request() req: { user: User }) {
-    return this.userService.findOne({ id: req.user.id });
+  async getUser(@Request() req: { user: { id: string } }) {
+    return this.userService.getUser(req.user.id);
+  }
+
+  @Put()
+  @UseGuards(JwtAuthGuard)
+  async updateUser(@Request() req: { user: { id: string } }, @Body() data: UserUpdateRequestBody) {
+    return this.userService.updateUser(req.user.id, data);
   }
 }
