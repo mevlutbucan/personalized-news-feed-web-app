@@ -1,4 +1,4 @@
-import { createSafeContext } from '../../../../../core/helpers/context';
+import { createSafeContext } from '../../../../core/helpers/context';
 
 interface IContextValue {
   isOpen: boolean;

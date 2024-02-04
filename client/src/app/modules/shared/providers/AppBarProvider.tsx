@@ -1,6 +1,6 @@
 import { FunctionComponent, PropsWithChildren, useState } from 'react';
 
-import { AppBarContext } from './context';
+import { AppBarContext } from '../contexts/AppBarContext';
 
 const DEFAULT_VALUE = false;
 

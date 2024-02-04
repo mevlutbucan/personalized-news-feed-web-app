@@ -1,4 +1,5 @@
-import AppBarProvider from './provider';
+import AppBarProvider from '../providers/AppBarProvider';
+
 import SideBar from './SideBar';
 import TopBar from './TopBar';
 

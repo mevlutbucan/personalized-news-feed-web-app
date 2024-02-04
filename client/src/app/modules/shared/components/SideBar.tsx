@@ -9,9 +9,9 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
 import { MenuItems } from './MenuItems';
 
-import { useAppBarContext } from './hooks';
+import { useAppBarContext } from '../hooks/AppBarHooks';
 
-import { OPENED_SIDEBAR_WIDTH } from './constants';
+import { OPENED_SIDEBAR_WIDTH } from '../constants';
 
 const StyledSideBar = styled(Drawer, { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }) => ({
   '& .MuiDrawer-paper': {

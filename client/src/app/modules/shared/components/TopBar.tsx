@@ -1,16 +1,16 @@
 import { styled } from '@mui/material/styles';
 import AppBar, { type AppBarProps } from '@mui/material/AppBar';
-import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
 import MenuIcon from '@mui/icons-material/Menu';
-import Person from '@mui/icons-material/Person';
 
-import { useAppBarContext } from './hooks';
+import UserNavButton from './UserNavButton';
 
-import { OPENED_SIDEBAR_WIDTH } from './constants';
+import { useAppBarContext } from '../hooks/AppBarHooks';
+
+import { OPENED_SIDEBAR_WIDTH } from '../constants';
 
 const StyledTopBar = styled(AppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
@@ -55,11 +55,7 @@ export default function TopBar() {
         <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
           Personalized News Feed Web App
         </Typography>
-        <IconButton color="primary">
-          <Avatar sx={{ backgroundColor: '#ffffff', color: 'inherit' }}>
-            <Person />
-          </Avatar>
-        </IconButton>
+        <UserNavButton />
       </Toolbar>
     </StyledTopBar>
   );
