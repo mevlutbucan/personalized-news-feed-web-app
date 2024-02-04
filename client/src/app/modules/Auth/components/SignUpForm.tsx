@@ -21,8 +21,12 @@ import FormInput from './shared/FormInput';
 
 import type { SignUpFieldValues } from '../../../../core/types/auth';
 import { SignUpSchema } from '../../../../core/schemas/auth/signup';
+import { useAppDispatch } from '../../../services/redux/hooks';
+import { signUp } from '../../../services/redux/auth/actions';
 
 const SignUpForm: FunctionComponent<Props> = ({ title, signInPath }) => {
+  const dispatch = useAppDispatch();
+
   const { register, handleSubmit, formState } = useForm<SignUpFieldValues>({
     resolver: yupResolver(SignUpSchema),
   });
@@ -33,7 +37,7 @@ const SignUpForm: FunctionComponent<Props> = ({ title, signInPath }) => {
   const { onChange: onPasswordChange, ref: passwordRef } = register('password');
 
   const onFormSubmit = handleSubmit((data) => {
-    console.log(data);
+    dispatch(signUp(data));
   });
 
   const [showPassword, setShowPassword] = useState(false);
