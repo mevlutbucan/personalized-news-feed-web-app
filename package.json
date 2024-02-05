@@ -5,7 +5,10 @@
   "scripts": {
     "dev:all": "nx run-many --targets=serve --projects=api,client",
     "dev:client": "nx run client:serve",
-    "dev:api": "nx run api:serve"
+    "dev:api": "nx run api:serve",
+    "build:all": "nx run-many --targets=build --projects=api,client",
+    "lint:all": "nx run-many --targets=lint",
+    "graph": "nx graph --affected"
   },
   "private": true,
   "devDependencies": {
