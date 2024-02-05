@@ -1,8 +1,6 @@
 # Personalized News Feed Web App
 
-✨ **This workspace has been generated using [Nx, Smart Monorepos · Fast CI.](https://nx.dev)** ✨
-
-[TOC]
+*This workspace has been generated using [Nx, Smart Monorepos · Fast CI.](https://nx.dev)*
 
 ## Case
 
