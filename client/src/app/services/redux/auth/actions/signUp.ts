@@ -1,16 +1,17 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { AuthResponseBody, SignUpFieldValues } from '@shared/core';
+import type { AxiosError } from 'axios';
+import type { AuthErrorResponse, AuthResponseBody, SignUpFieldValues } from '@shared/core';
 
 import { authService } from '../../..';
 
-export default createAsyncThunk<AuthResponseBody, SignUpFieldValues, { rejectValue: string }>(
+export default createAsyncThunk<AuthResponseBody, SignUpFieldValues, { rejectValue: AuthErrorResponse }>(
   'auth/signUp',
   async (data, { fulfillWithValue, rejectWithValue }) => {
     try {
       const response = await authService.signup(data);
       return fulfillWithValue(response.data);
     } catch (error) {
-      return rejectWithValue(error as string);
+      return rejectWithValue((error as AxiosError).response?.data as AuthErrorResponse);
     }
   }
 );

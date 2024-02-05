@@ -2,6 +2,7 @@ import { createAction } from '@reduxjs/toolkit';
 import { AuthResponseBody } from '@shared/core';
 
 export const changeAuthState = createAction<AuthResponseBody>('auth/changeState');
+export const resetAuthError = createAction('auth/resetAuthError');
 export const signOut = createAction('auth/signOut');
 
 export { default as signIn } from './signIn';

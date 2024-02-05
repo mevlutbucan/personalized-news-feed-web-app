@@ -1,4 +1,4 @@
-import { type FunctionComponent, useState } from 'react';
+import { type FunctionComponent, useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { SignUpFieldValues, SignUpSchema } from '@shared/core';
@@ -7,6 +7,7 @@ import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
+import FormHelperText from '@mui/material/FormHelperText';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import Link from '@mui/material/Link';
@@ -20,8 +21,8 @@ import FormTitle from './shared/FormTitle';
 import FormLink from './shared/FormLink';
 import FormInput from './shared/FormInput';
 
-import { useAppDispatch } from '../../../services/redux/hooks';
-import { signUp } from '../../../services/redux/auth/actions';
+import { useAppDispatch, useAppSelector } from '../../../services/redux/hooks';
+import { resetAuthError, signUp } from '../../../services/redux/auth/actions';
 
 const SignUpForm: FunctionComponent<Props> = ({ title, signInPath }) => {
   const dispatch = useAppDispatch();
@@ -44,6 +45,13 @@ const SignUpForm: FunctionComponent<Props> = ({ title, signInPath }) => {
     event.preventDefault();
     setShowPassword((show) => !show);
   };
+
+  const authError = useAppSelector((state) => state.auth.error);
+  useEffect(() => {
+    if (authError) {
+      setTimeout(() => dispatch(resetAuthError()), 2000);
+    }
+  }, [authError]);
 
   return (
     <Box display="flex" width={480} px="64px" alignItems="center">
@@ -113,9 +121,14 @@ const SignUpForm: FunctionComponent<Props> = ({ title, signInPath }) => {
             Password must contain at least eight characters, at least one number and both lower and uppercase letters.
           </Alert>
 
-          <Button type="submit" variant="contained" size="large" fullWidth>
-            Register
-          </Button>
+          <Stack>
+            <Button type="submit" variant="contained" size="large" fullWidth>
+              Register
+            </Button>
+            <FormHelperText error sx={{ mt: 0, mb: -2, py: 1, height: '2rem', textAlign: 'center' }}>
+              {authError}
+            </FormHelperText>
+          </Stack>
 
           <Divider />
 

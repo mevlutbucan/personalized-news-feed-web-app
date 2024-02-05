@@ -1,4 +1,4 @@
-import { type FunctionComponent, useState } from 'react';
+import { type FunctionComponent, useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { SignInFieldValues, SignInSchema } from '@shared/core';
@@ -6,6 +6,7 @@ import { SignInFieldValues, SignInSchema } from '@shared/core';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import FormHelperText from '@mui/material/FormHelperText';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import Link from '@mui/material/Link';
@@ -19,8 +20,8 @@ import FormTitle from './shared/FormTitle';
 import FormLink from './shared/FormLink';
 import FormInput from './shared/FormInput';
 
-import { useAppDispatch } from '../../../services/redux/hooks';
-import { signIn } from '../../../services/redux/auth/actions';
+import { useAppDispatch, useAppSelector } from '../../../services/redux/hooks';
+import { resetAuthError, signIn } from '../../../services/redux/auth/actions';
 
 const SignInForm: FunctionComponent<Props> = ({ title, signUpPath }) => {
   const dispatch = useAppDispatch();
@@ -41,6 +42,13 @@ const SignInForm: FunctionComponent<Props> = ({ title, signUpPath }) => {
     event.preventDefault();
     setShowPassword((show) => !show);
   };
+
+  const authError = useAppSelector((state) => state.auth.error);
+  useEffect(() => {
+    if (authError) {
+      setTimeout(() => dispatch(resetAuthError()), 2000);
+    }
+  }, [authError]);
 
   return (
     <Box display="flex" width={480} px="64px" alignItems="center">
@@ -99,9 +107,14 @@ const SignInForm: FunctionComponent<Props> = ({ title, signUpPath }) => {
             <Link>Forgot password?</Link>
           </Typography>
 
-          <Button type="submit" variant="contained" size="large" fullWidth>
-            Sign in
-          </Button>
+          <Stack>
+            <Button type="submit" variant="contained" size="large" fullWidth>
+              Sign in
+            </Button>
+            <FormHelperText error sx={{ mt: 0, mb: -2, py: 1, height: '2rem', textAlign: 'center' }}>
+              {authError}
+            </FormHelperText>
+          </Stack>
         </Stack>
       </Stack>
     </Box>

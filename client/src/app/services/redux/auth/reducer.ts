@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 
 import { initialState } from './state';
-import { changeAuthState, signIn, signOut, signUp } from './actions';
+import { changeAuthState, resetAuthError, signIn, signOut, signUp } from './actions';
 
 export const AuthReducer = createReducer(initialState, (builder) => {
   builder
@@ -9,6 +9,9 @@ export const AuthReducer = createReducer(initialState, (builder) => {
       state.loggedIn = true;
       state.accessToken = action.payload.accessToken;
       localStorage.setItem('access_token', action.payload.accessToken);
+    })
+    .addCase(resetAuthError, (state, action) => {
+      state.error = '';
     })
     .addCase(signOut, (state, action) => {
       state.loggedIn = false;
@@ -29,7 +32,7 @@ export const AuthReducer = createReducer(initialState, (builder) => {
     })
     .addCase(signIn.rejected, (state, action) => {
       state.loading = false;
-      // state.error = action.payload!;
+      state.error = action.payload?.message;
     })
     .addCase(signUp.pending, (state, action) => {
       state.loading = true;
@@ -45,6 +48,6 @@ export const AuthReducer = createReducer(initialState, (builder) => {
     })
     .addCase(signUp.rejected, (state, action) => {
       state.loading = false;
-      // state.errorCode = action.payload!;
+      state.error = action.payload?.message;
     });
 });
