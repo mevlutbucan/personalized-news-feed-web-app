@@ -6,6 +6,7 @@ import Root from '../pages/Root';
 import SignIn from '../pages/SignIn';
 import SignUp from '../pages/SignUp';
 import News from '../pages/News';
+import Search from '../pages/Search';
 import Preferences from '../pages/Preferences';
 
 import { rootLoader } from './loaders/rootLoader';
@@ -22,6 +23,7 @@ const routes: RouteObject[] = [
   { path: Paths.SignIn, Component: SignIn },
   { path: Paths.SignUp, Component: SignUp },
   { path: Paths.News, loader: checkAuth, Component: News },
+  { path: Paths.Search, loader: checkAuth, Component: Search },
   { path: Paths.Preferences, loader: checkAuth, Component: Preferences },
 ];
 
