@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 
-import { initialState } from './state';
+import { type UserState, initialState } from './state';
 import { changeUserState, updatePreferences } from './actions';
 
 export const UserReducer = createReducer(initialState, (builder) => {
@@ -9,7 +9,7 @@ export const UserReducer = createReducer(initialState, (builder) => {
       state.email = action.payload.email;
       state.firstName = action.payload.firstName;
       state.lastName = action.payload.lastName;
-      state.preferences = action.payload.preferences;
+      state.preferences = action.payload.preferences as UserState['preferences'];
     })
     .addCase(updatePreferences.pending, (state, action) => {
       state.loading = true;
@@ -19,7 +19,7 @@ export const UserReducer = createReducer(initialState, (builder) => {
     .addCase(updatePreferences.fulfilled, (state, action) => {
       state.loading = false;
       state.success = true;
-      state.preferences = action.payload.preferences;
+      state.preferences = action.payload.preferences as UserState['preferences'];
     })
     .addCase(updatePreferences.rejected, (state, action) => {
       state.loading = false;
