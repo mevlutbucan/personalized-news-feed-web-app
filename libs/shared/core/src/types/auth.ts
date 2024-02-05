@@ -9,3 +9,9 @@ export type SignUpFieldValues = InferType<typeof SignUpSchema>;
 export interface AuthResponseBody {
   accessToken: string;
 }
+
+export interface AuthErrorResponse {
+  status: number;
+  name: string;
+  message: string;
+}

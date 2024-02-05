@@ -1,4 +1,10 @@
-import { BadRequestException, Injectable, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import type { User } from '@prisma/client';
 import { AuthResponseBody, SignInFieldValues, SignUpFieldValues } from '@shared/core';
@@ -14,9 +20,9 @@ export class AuthService {
   private async _validateUser(email: string, password: string) {
     const user = await this.userService.findOne({ email });
     if (!user) {
-      throw new Error('Invalid email');
+      throw new NotFoundException('Invalid email');
     } else if (!(await comparePassword(password, user.password))) {
-      throw new Error('Invalid password');
+      throw new UnauthorizedException('Invalid password');
     }
     return user;
   }
