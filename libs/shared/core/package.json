@@ -1,4 +1,9 @@
 {
   "name": "@shared/core",
-  "version": "0.0.1"
+  "version": "0.0.1",
+  "dependencies": {
+    "@prisma/client": "*",
+    "tslib": "*",
+    "yup": "*"
+  }
 }

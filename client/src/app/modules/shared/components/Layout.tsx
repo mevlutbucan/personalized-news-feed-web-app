@@ -18,6 +18,7 @@ const Layout: FunctionComponent<PropsWithChildren> = ({ children }) => {
     if (!loggedIn) {
       navigate(Paths.SignIn);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loggedIn]);
 
   return (

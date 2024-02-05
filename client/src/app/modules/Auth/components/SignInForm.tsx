@@ -48,6 +48,7 @@ const SignInForm: FunctionComponent<Props> = ({ title, signUpPath }) => {
     if (authError) {
       setTimeout(() => dispatch(resetAuthError()), 2000);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authError]);
 
   return (

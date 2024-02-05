@@ -19,6 +19,7 @@ export default function SignUp() {
     if (loggedIn) {
       navigate(Paths.Preferences);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loggedIn]);
 
   return (

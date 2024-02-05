@@ -1,6 +1,6 @@
 import { type FunctionComponent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { GUARDIAN_SECTIONS } from '@shared/core';
+import { GUARDIAN_SECTIONS, Source } from '@shared/core';
 
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
@@ -25,11 +25,12 @@ const PreferenceForm: FunctionComponent<Props> = ({ title }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const accessToken = useAppSelector((state) => state.auth.accessToken)!;
   const preferences = useAppSelector((state) => state.user.preferences);
 
   const [source, setSource] = useState(preferences?.source || 'GUARDIAN');
-  const handleSourceChange = (_event: React.MouseEvent<HTMLElement>, newSource: string | null) => {
+  const handleSourceChange = (_event: React.MouseEvent<HTMLElement>, newSource: Source | null) => {
     if (newSource) {
       setSource(newSource);
     }

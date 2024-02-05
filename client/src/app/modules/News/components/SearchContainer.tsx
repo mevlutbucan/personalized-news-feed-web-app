@@ -11,7 +11,9 @@ import { newsService } from '../../../services';
 import { useAppSelector } from '../../../services/redux/hooks';
 
 const SearchContainer: FunctionComponent = () => {
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const accessToken = useAppSelector((state) => state.auth.accessToken)!;
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const preferences = useAppSelector((state) => state.user.preferences)!;
 
   const [news, setNews] = useState<Promise<NewsResult[]>>(Promise.resolve([]));
